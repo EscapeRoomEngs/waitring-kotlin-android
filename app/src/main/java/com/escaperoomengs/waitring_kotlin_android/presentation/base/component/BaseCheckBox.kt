@@ -34,7 +34,7 @@ fun BaseCheckBox(modifier: Modifier = Modifier,
             modifier = modifier,
             checkedBackgroundColor = Color(0xFFFF3D00),
             unCheckedBackgroundColor = Color(0xFFD9D9D9))
-        text?.let{Text(it) }
+        text?.let{ Text(it) }
     }
 }
 

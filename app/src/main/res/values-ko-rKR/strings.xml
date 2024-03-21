@@ -6,4 +6,5 @@
     <string name="main_bottom_home">홈</string>
     <string name="main_bottom_reserved">예약내역</string>
     <string name="main_bottom_more">더보기</string>
+    <string name="login_title">로그인</string>
 </resources>
