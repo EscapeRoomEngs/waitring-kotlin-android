@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.escaperoomengs.waitring_kotlin_android.presentation.feature.main.MainScreen
+import com.escaperoomengs.waitring_kotlin_android.presentation.feature.login.LoginScreen
 import com.escaperoomengs.waitring_kotlin_android.ui.theme.Waitring_kotlin_androidTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen()
+                    LoginScreen()
                 }
             }
         }

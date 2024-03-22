@@ -29,7 +29,7 @@ fun BaseBottomButton(icon: Int? = null,
                      onClick: ()->Unit) {
     Button(modifier = Modifier
         .fillMaxWidth()
-        .height(80.dp),
+        .height(59.dp),
         enabled = enabled,
         shape = RectangleShape,
         colors = ButtonDefaults.buttonColors(
