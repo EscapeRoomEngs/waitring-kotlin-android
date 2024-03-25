@@ -8,6 +8,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -16,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.escaperoomengs.waitring_kotlin_android.R
 import com.escaperoomengs.waitring_kotlin_android.presentation.base.component.BaseBottomButton
+import com.escaperoomengs.waitring_kotlin_android.presentation.base.component.BaseCheckBox
 import com.escaperoomengs.waitring_kotlin_android.presentation.base.component.BaseTextField
 
 @Composable
@@ -24,22 +26,31 @@ fun LoginScreen() {
     val viewModel: LoginViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    LoginView(id = uiState.id, pw = uiState.pw)
+    LoginView(
+        id = uiState.id,
+        pw = uiState.pw,
+        isAutoCheck = uiState.isAutoCheck,
+        setAutoCheck = { viewModel.onEvent(LoginOnEvent.SetCheckAuto) })
 }
 
 @Composable
 private fun LoginView(
     id: String,
-    pw: String
+    pw: String,
+    isAutoCheck: Boolean,
+    setAutoCheck: () -> Unit
 ) {
     Scaffold(
         topBar = {
             Top()
         },
         bottomBar = {
-            Bottom(btnEnabled = id.isNotBlank() && pw.isNotBlank()) {
-                //todo 로그인 동작
-            }
+            Bottom(
+                btnEnabled = id.isNotBlank() && pw.isNotBlank(),
+                btnOnClick = {},
+                isAutoCheck = isAutoCheck,
+                setAutoCheck = setAutoCheck
+            )
         }) {
         Box(modifier = Modifier.padding(it)) {
             Body(
@@ -107,12 +118,23 @@ private fun IdPwContent(
 @Composable
 private fun Bottom(
     btnEnabled: Boolean,
-    btnOnClick: () -> Unit
+    btnOnClick: () -> Unit,
+    isAutoCheck: Boolean,
+    setAutoCheck: () -> Unit
 ) {
-    BaseBottomButton(
-        text = stringResource(id = R.string.login_title),
-        enabled = btnEnabled, onClick = btnOnClick
-    )
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(22.dp)
+    ) {
+        BaseCheckBox(isChecked = isAutoCheck, text = stringResource(id = R.string.login_auto)) {
+            setAutoCheck()
+        }
+        BaseBottomButton(
+            text = stringResource(id = R.string.login_title),
+            enabled = btnEnabled, onClick = btnOnClick
+        )
+    }
+
 }
 
 @Preview
@@ -121,7 +143,7 @@ private fun TopPreview() {
 
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun BodyPreview() {
     Body(id = "", pw = "")
@@ -131,11 +153,11 @@ private fun BodyPreview() {
 @Preview
 @Composable
 private fun BottomPreview() {
-    Bottom(true) {}
+    Bottom(true, {}, true, {})
 }
 
 @Preview
 @Composable
 private fun LoginViewPreview() {
-    LoginView(id = "", pw = "")
+    LoginView(id = "", pw = "", isAutoCheck = false, {})
 }

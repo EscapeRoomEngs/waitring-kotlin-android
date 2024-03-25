@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -20,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.escaperoomengs.waitring_kotlin_android.presentation.base.util.noRippleClickable
 
 @Composable
 fun BaseCheckBox(modifier: Modifier = Modifier,
@@ -27,7 +29,8 @@ fun BaseCheckBox(modifier: Modifier = Modifier,
                  text: String? = null,
                  onCheckedChange: ()->Unit) {
 
-    Row(horizontalArrangement = Arrangement.spacedBy(4.dp),
+    Row(modifier = Modifier.noRippleClickable { onCheckedChange() },
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalAlignment = Alignment.CenterVertically){
         CircleCheckBox(isChecked = isChecked,
             onChecked = onCheckedChange,
@@ -50,6 +53,7 @@ fun CircleCheckBox(
 ) {
     Box(
         modifier = modifier
+            .size(20.dp)
             .clip(CircleShape)
             .clickable { onChecked() }
             .background(
